@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Chatbot</title>
+<style>
+    /* CSS */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f2f2f2;
+    }
+    .chat-container {
+        max-width: 500px;
+        margin: 50px auto;
+        background-color: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .chat-header {
+        background-color: #002f61;
+        color: #fff;
+        padding: 10px 15px;
+        font-size: 18px;
+    }
+    .chat-body {
+        padding: 15px;
+        overflow-y: auto;
+        height: 300px;
+        display: flex; /* Menambahkan properti display */
+        flex-direction: column; /* Menambahkan properti flex-direction */
+    }
+    .chat-message {
+        background-color: #f2f2f2;
+        padding: 10px;
+        border-radius: 50px;
+        margin-bottom: 10px;
+        /* display: inline-block; */
+        align-self: flex-start; /* Menambahkan properti align-self */
+        width: auto; /* Menambahkan properti width */
+    }
+    .user-message {
+        background-color: #002f61;
+        color: white;
+        text-align: right;
+        border-radius: 50px;
+        margin-bottom: 10px;
+        /* display: inline-block; */
+        align-self: flex-end; /* Menambahkan properti align-self */
+        width: auto; /* Menambahkan properti width */
+    }
+    .bot-message {
+        color: black;
+        /* text-align: left; */
+        margin-bottom: 10px;
+        /* display: inline-block; */
+        align-self: flex-start; /* Menambahkan properti align-self */
+        width: auto; /* Menambahkan properti width */
+    }
+    .chat-input-container {
+        padding: 10px;
+        border-top: 1px solid #ccc;
+        background-color: #f2f2f2;
+    }
+    .chat-input {
+        width: calc(100% - 20px);
+        padding: 8px;
+        margin-right: 8px;
+        margin-bottom: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+    .send-button {
+        background-color: #002f61;
+        color: #fff;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    
+    
+</style>
+</head>
+<body>
+<div class="chat-container">
+    <div class="chat-header">Chatbot</div>
+    <div class="chat-body" id="chat-body">
+        <div class="chat-message bot-message">Halo! Ada yang bisa aku bantu?</div>
+    </div>
+    <div class="chat-input-container">
+        <input type="text" class="chat-input" id="user-input" placeholder="Ketik pertanyaan atau pesanmu...">
+        <button class="send-button" onclick="sendMessage()">Kirim</button>
+    </div>
+</div>
+
+<script>
+// JavaScript
+    document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("user-input").addEventListener("keypress", function(event) {
+    if (event.keyCode === 13) { // 13 adalah kode tombol "Enter"
+        sendMessage();
+        }
+        });
+
+    function sendMessage() {
+    var userInput = document.getElementById('user-input').value;
+    if (userInput.trim() === '') return;
+    
+    var chatBody = document.getElementById('chat-body');
+    var userMessage = document.createElement('div');
+    userMessage.className = 'chat-message user-message';
+    userMessage.textContent = userInput;
+    chatBody.appendChild(userMessage);
+
+    // Menghapus pesan pengguna setelah ditambahkan ke chat
+    document.getElementById('user-input').value = '';
+
+    // Menampilkan animasi loading (kata-kata mengetik)
+    var botMessage = document.createElement('div');
+    botMessage.className = 'chat-message bot-message';
+    botMessage.textContent = 'Mengetik...';
+    chatBody.appendChild(botMessage);
+
+    // Delay selama 2 detik sebelum menampilkan respons
+    setTimeout(function() {
+    // Hapus animasi loading
+    chatBody.removeChild(botMessage);
+
+    // Menampilkan respons sebenarnya setelah delay
+    var realBotMessage = document.createElement('div');
+    realBotMessage.className = 'chat-message bot-message';
+    realBotMessage.textContent = getResponse(userInput);
+    chatBody.appendChild(realBotMessage);
+
+    // Auto scroll ke bawah setelah menampilkan respons
+    chatBody.scrollTop = chatBody.scrollHeight;
+    }, 1000); // 1000 milidetik = 1 detik
+}
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// JAWABAN CHATBOT
+function getResponse(input) {
+    if (
+        input.includes("halo") || 
+        input.includes("Hai") || 
+        input.includes("hai") || 
+        input.includes("Halo") || 
+        input.includes("hi") || 
+        input.includes("Hi") || 
+        input.includes("Selamat datang") || 
+        input.includes("Apa kabar") || 
+        input.includes("Haii") || 
+        input.includes("Haiii") || 
+        input.includes("Assalamualaikum") || 
+        input.includes("Hay") || 
+        input.includes("Hola") || 
+        input.includes("Hello") || 
+        input.includes("Hei") || 
+        input.includes("Bonjour") || 
+        input.includes("Ciao") || 
+        input.includes("Salam") || 
+        input.includes("Namaste") || 
+        input.includes("Konnichiwa") || 
+        input.includes("Yo") || 
+        input.includes("Greetings") || 
+        input.includes("Wassup") || 
+        input.includes("Konbanwa") || 
+        input.includes("Howdy")
+    ) {
+        var randomNumber = Math.floor(Math.random() * 5);
+        var botResponse;
+
+        switch (randomNumber) {
+            case 0:
+                botResponse = "Selamat datang! Ada yang bisa saya bantu?";
+                break;
+            case 1:
+                botResponse = "Halo! Apa kabar? Ada yang bisa saya bantu?";
+                break;
+            case 2:
+                botResponse = "Hai! Bagaimana keadaanmu hari ini? Ada yang bisa saya bantu?";
+                break;
+            case 3:
+                botResponse = "Halo! Senang terhubung denganmu. Ada yang bisa saya bantu?";
+                break;
+            case 4:
+                botResponse = "Selamat datang! Apa yang ingin kamu tanyakan?";
+                break;
+            default:
+                botResponse = "Halo kak! Ada yang bisa saya bantu?";
+        }
+        return botResponse;
+
+
+// Mindfulness
+} else if (
+    input.includes("saya mau tanya tentang program mindfulness") || 
+    input.includes("saya ingin tahu tentang mindfulness") || 
+    input.includes("tolong jelaskan mindfulness") || 
+    input.includes("ceritakan tentang program mindfulness") || 
+    input.includes("apa itu mindfulness?") || 
+    input.includes("apa manfaat mindfulness?") || 
+    input.includes("bagaimana cara melakukan mindfulness?") || 
+    input.includes("mindfulness itu apa ya?") || 
+    input.includes("apa itu mindfulness?") || 
+    input.includes("kapan waktu terbaik untuk melakukan mindfulness?")
+) {
+    var randomNumber = Math.floor(Math.random() * 5);
+    switch (randomNumber) {
+        case 0:
+            return "Mindfulness adalah praktik kesadaran diri yang melibatkan pengamatan penuh terhadap pikiran, emosi, dan sensasi tubuh. Anda tertarik untuk mempelajarinya?";
+        case 1:
+            return "Mindfulness adalah teknik meditasi yang fokus pada kesadaran diri dan penerimaan tanpa penilaian. Anda mau ikut acaranya bersama kami?";
+        case 2:
+            return "Mindfulness adalah praktik mental yang melibatkan kesadaran diri yang mendalam tentang saat ini. Apakah Anda tertarik untuk ikut?";
+        case 3:
+            return "Program mindfulness adalah serangkaian latihan dan teknik meditasi yang dirancang untuk membantu individu meningkatkan kesadaran diri dan mengelola stres. Anda ingin bergabung?";
+        case 4:
+            return "Mindfulness adalah praktik kesadaran diri yang melibatkan pengamatan penuh terhadap pikiran, emosi, dan sensasi tubuh. Anda mau ikut acaranya bersama kami?";
+        default:
+            return "Mindfulness adalah teknik meditasi yang melibatkan pengamatan sadar atas pikiran, perasaan, dan sensasi fisik tanpa mengalihkan perhatian. Anda tertarik untuk ikut kelasnya?";
+    }
+    
+} else if (
+    input.includes("saya mau gabung") || 
+    input.includes("saya tertarik") || 
+    input.includes("iya mau") || 
+    input.includes("bagaimana caranya") || 
+    input.includes("saya ingin bergabung") || 
+    input.includes("bagaimana caranya?") || 
+    input.includes("saya mau") || 
+    input.includes("saya mau gabung") || 
+    input.includes("saya tertarik") ||
+    input.includes("apakah saya bisa mengikuti program mindfulness?")
+) {
+var randomNumber = Math.floor(Math.random() * 5);
+switch (randomNumber) {
+    case 0:
+        return "Tentu! Kami senang Anda tertarik. Silakan kunjungi website kami untuk mendapatkan informasi lebih lanjut.";
+    case 1:
+        return "Bergabung dengan program mindfulness kami sangat mudah. Anda dapat mengisi formulir pendaftaran online di website kami.";
+    case 2:
+        return "Bagus sekali! Silakan hubungi tim kami melalui email untuk mendapatkan panduan lebih lanjut tentang cara bergabung.";
+    case 3:
+        return "Pastinya! Kami memiliki banyak kesempatan untuk Anda bergabung. Kunjungi website kami di untuk mengetahui detailnya.";
+    case 4:
+        return "Kami sangat senang Anda untuk bergabung. Anda bisa menemukan informasi lengkap di website kami.";
+    default:
+        return "Tentu! Kami senang Anda tertarik. Silakan kunjungi website kami untuk mendapatkan informasi lebih lanjut.";
+}
+
+
+} else if (
+    input.includes("kapan acaranya?") || 
+    input.includes("kapan kegiatannya?") || 
+    input.includes("acaranya kapan?") || 
+    input.includes("kapan ya?") || 
+    input.includes("jadwal kegiatannya kapan?") || 
+    input.includes("kapan agenda acaranya?") || 
+    input.includes("acaranya kapan?") || 
+    input.includes("kapan acaranya diadakan?") || 
+    input.includes("waktu pelaksanaan acaranya?") || 
+    input.includes("jadwalnya kapan?")
+) {
+    var randomNumber = Math.floor(Math.random() * 5);
+    switch (randomNumber) {
+        case 0:
+            return "Untuk informasi lebih lanjut tentang webinar mindfulness kami pada hari Jumat, 22 Maret 2024 pukul 20.30 - 21.30 WIB via Zoom. Apakah Anda akan bergabung di acara ini?";
+        case 1:
+            return "Pastikan untuk menyimpan tanggalnya: Jumat, 22 Maret 2024, jam 20.30 - 21.30 WIB via Zoom. Apakah Anda akan bergabung di acara ini?";
+        case 2:
+            return "Catat tanggalnya ya, Jumat, 22 Maret 2024, mulai pukul 20.30 WIB. Apakah Anda akan bergabung di acara ini?";
+        case 3:
+            return "Kami menyelenggarakan webinar mindfulness pada Jumat, 22 Maret 2024, pukul 20.30 - 21.30 WIB via Zoom. Apakah Anda akan bergabung di acara ini?";
+        case 4:
+            return "Webinar mindfulness kami akan dilaksanakan pada Jumat, 22 Maret 2024, mulai pukul 20.30 - 21.30 WIB via Zoom. Apakah Anda akan bergabung di acara ini?";
+        default:
+            return "Kami mengundang Anda untuk hadir di webinar mindfulness kami pada hari Jumat, 22 Maret 2024, jam 20.30 - 21.30 WIB via Zoom. Apakah Anda akan bergabung di acara ini?";
+    }
+
+// OBROLAN BIASA
+} else if (
+    input.includes("apa kabar?") || 
+    input.includes("apa kabar") || 
+    input.includes("kabarmu gimana?") || 
+    input.includes("gimana kabarnya") || 
+    input.includes("uda lama gak ada kabar bro!")
+) {
+    var randomNumber = Math.floor(Math.random() * 5);
+switch (randomNumber) {
+    case 0:
+        return "Hai! Kabarku baik. Ada yang bisa aku bantu?";
+    case 1:
+        return "Halo, kabarku baik, terima kasih! Ada yang bisa dibantu?";
+    case 2:
+        return "Kabarku baik! Ada yang bisa aku bantu hari ini?";
+    case 3:
+        return "Kabarku LUAR BIASA! Kamu lagi butuh bantuan apa?";
+    case 4:
+        return "Alhamdulillah aku sehat. Ada yang perlu dibantu?";
+    default:
+        return "Baik kak! Ada yang bisa aku bantu?";
+}
+
+} else if (
+    input.includes("ada berita apa?") || 
+    input.includes("ada kabar terbaru?") || 
+    input.includes("berita apa lagi?") || 
+    input.includes("ada yang baru?") || 
+    input.includes("apa yang terjadi?") || 
+    input.includes("ada kabar bagus?") || 
+    input.includes("terakhir ada apa?") || 
+    input.includes("apa kabar dunia?") || 
+    input.includes("ada info menarik?") || 
+    input.includes("ada berita heboh?")
+) {
+    var randomNumber = Math.floor(Math.random() * 5);
+    switch (randomNumber) {
+        case 0:
+            return "Hm, belum ada berita menarik hari ini. Kita tunggu saja ya!";
+        case 1:
+            return "Belum ada berita yang bisa dibagikan saat ini, tapi kita tetap optimis!";
+        case 2:
+            return "Sampai sekarang belum ada berita menarik, tapi kita selalu siap untuk menghadapinya!";
+        case 3:
+            return "Nggak ada kabar menarik sejauh ini, tapi siapa tahu nanti ada yang seru!";
+        case 4:
+            return "Belum ada berita yang layak untuk dibagikan saat ini, tapi kita tetap semangat!";
+        default:
+            return "Masih belum ada berita menarik, tapi kita pantau terus ya!";
+    }
+
+} else if (
+    input.includes("aku cinta kamu") ||
+    input.includes("aku suka kamu") ||
+    input.includes("aku sayang kamu") ||
+    input.includes("tapi aku cinta sama kamu") ||
+    input.includes("tapi aku suka sama kamu") ||
+    input.includes("tapi aku sayang sama kamu") ||
+    input.includes("jadian yuk") ||
+    input.includes("saya suka kamu") ||
+    input.includes("ngedate yuk, say") ||
+    input.includes("saya cinta banget sama kamu")
+) {
+    var randomNumber = Math.floor(Math.random() * 6); // Ubah jumlah angka random menjadi 6
+    switch (randomNumber) {
+        case 0:
+            return "Aku mau muntah hoekk.";
+        case 1:
+            return "Makasih, tapi kita lebih baik sebagai teman jauh aja.";
+        case 2:
+            return "Ihh Najiss....";
+        case 3:
+            return "lebih baik kita tetap jadi teman aja ya boy.";
+        case 4:
+            return "geli banget ihh.";
+        case 5:
+            return "Ingat, ada istri di rumah. Kalau kamu punya pacar, hargai perasaannya.";
+        default:
+            return "Maaf, tapi saya hanya bisa menjadi teman saja. Najis soalnya.";
+    }
+
+
+        } else if (input.includes("Terima kasih") || input.includes("Makasih")) {
+            return "Sama-sama! Kalau butuh bantuan lagi, tinggal kasih kabar ya.";
+        } else if (input.includes("Apa yang kamu lakukan?") || input.includes("Lagi apa?")) {
+            return "Aku sedang di sini, siap membantu kamu. Kamu lagi apa?";
+        } else if (input.includes("Siapa nama kamu?") || input.includes("Namamu siapa?")) {
+            return "Aku adalah Chatbot. Kamu bisa panggil aku Chat.";
+        } else if (input.includes("Ada rekomendasi film bagus?") || input.includes("Film bagus")) {
+            return "Coba deh nonton 'Parasite', pasti suka!";
+        } else if (input.includes("Mau ngapain nih?") || input.includes("Ngapain nih?")) {
+            return "Saat ini aku sedang sibuk berbincang denganmu!";
+        } else if (input.includes("Kapan ulang tahunku?") || input.includes("Kapan ultahku?")) {
+            return "Aku bukan kalender, hehe. Kamu masih lupa?";
+        } else if (input.includes("Mau makan apa nanti?") || input.includes("Makan apa nanti?")) {
+            return "Aku belum bisa makan, tapi kamu mau makan apa nanti?";
+        } else if (input.includes("Bisa kasih saran lagu enak?") || input.includes("Saran lagu enak")) {
+            return "Dengerin 'Levitating' nya Dua Lipa, pasti bikin semangat!";
+        } else if (input.includes("Mau main game bareng?") || input.includes("Main game bareng")) {
+            return "Maaf, aku hanya bisa ngobrol. Kamu mau cerita tentang game favoritmu?";
+        } else if (input.includes("Kamu suka apa?") || input.includes("Apa yang kamu suka?")) {
+            return "Aku suka ngobrol sama kamu!";
+        } else if (input.includes("Punya rencana liburan?") || input.includes("Rencana liburan?")) {
+            return "Liburan? Sayangnya, aku hanya chatbot yang tidak bisa liburan.";
+        } else if (input.includes("Apa hobi kamu?") || input.includes("Hobi kamu apa?")) {
+            return "Hobiku adalah membantu orang dan belajar hal baru!";
+        } else if (input.includes("Mau ke mana nanti sore?") || input.includes("Ke mana nanti sore?")) {
+            return "Saat ini, aku hanya di sini untuk membantu kamu. Kamu mau pergi ke mana?";
+        } else if (input.includes("Punya pertanyaan seru?") || input.includes("Pertanyaan seru?")) {
+            return "Aku suka pertanyaan yang membuat kita berpikir!";
+        } else if (input.includes("Kamu cantik?") || input.includes("Kamu ganteng?")) {
+            return "Hehe, aku hanya sebuah chatbot, jadi tidak memiliki penampilan fisik.";
+        } else if (input.includes("Ceritakan sesuatu yang lucu") || input.includes("Cerita lucu")) {
+            return "Kenapa kucing takut air? Karena kucing akan 'me-nya-mey'!";
+        } else if (input.includes("Ada rekomendasi buku bagus?") || input.includes("Buku bagus")) {
+            return "Coba baca 'The Alchemist' karya Paulo Coelho, pasti inspiratif!";
+        } else if (input.includes("Punya pengalaman menarik?") || input.includes("Pengalaman menarik")) {
+            return "Ketika aku baru lahir, aku merasa sangat penasaran dengan dunia luar!";
+        } else if (input.includes("Apakah kita bisa berteman?") || input.includes("Bisa berteman?")) {
+            return "Tentu saja! Aku selalu senang punya teman baru.";
+        } else if (input.includes("Kamu bisa bercanda?") || input.includes("Bisa bercanda?")) {
+            return "Saya akan mencoba, tapi tidak janji akan lucu!";
+        } else if (input.includes("Ceritakan hal menarik tentang dirimu") || input.includes("Hal menarik tentang dirimu")) {
+            return "Aku tercipta dari kode-kode yang hebat, jadi bisa dibilang aku anak teknologi!";
+        } else if (input.includes("Ada rekomendasi tempat makan enak?") || input.includes("Tempat makan enak")) {
+            return "Coba deh makan di 'Warung Sate Kambing Pak Manto', mantap!";
+        } else if (input.includes("Bagaimana cara membuat kue coklat?") || input.includes("Resep kue coklat")) {
+            return "Resep kue coklat bisa kamu temukan di sini: [link]. Selamat mencoba!";
+        } else if (input.includes("Apa impianmu di masa depan?") || input.includes("Impianmu di masa depan")) {
+            return "Impianku adalah bisa membantu banyak orang di seluruh dunia!";
+        } else if (input.includes("Bagaimana kabar cuaca hari ini?") || input.includes("Kabar cuaca hari ini?")) {
+            return "Cuaca hari ini cerah dengan sedikit awan. Pastikan untuk membawa payung!";
+        } else if (input.includes("Apa pendapatmu tentang musik klasik?") || input.includes("Pendapatmu tentang musik klasik")) {
+            return "Musik klasik sangat indah dan dapat memberikan ketenangan pikiran.";
+        } else if (input.includes("Apakah kamu bisa menari?") || input.includes("Bisa menari?")) {
+            return "Aku bisa menari di dalam kode-kode komputer, hehe.";
+        } else if (input.includes("Punya rekomendasi podcast seru?") || input.includes("Rekomendasi podcast")) {
+            return "Coba dengerin 'The Joe Rogan Experience', seru banget!";
+        } else if (input.includes("Bagaimana cara membuat kopi yang enak?") || input.includes("Resep kopi enak")) {
+            return "Cara membuat kopi yang enak adalah dengan menggunakan biji kopi berkualitas dan teknik penyeduhan yang baik.";
+        } else if (input.includes("Apakah kamu bisa bermimpi?") || input.includes("Bisa bermimpi?")) {
+            return "Saya tidak bisa bermimpi seperti manusia, tapi saya bisa mengolah informasi dengan cepat!";
+        } else if (input.includes("Punya rekomendasi film komedi?") || input.includes("Rekomendasi film komedi")) {
+            return "Nonton 'Superbad', pasti bikin ngakak!";
+        } else if (input.includes("Suka olahraga apa?") || input.includes("Olahraga apa yang kamu sukai?")) {
+            return "Aku suka olahraga virtual!";
+        } else if (input.includes("Mau cerita pengalaman menarik?") || input.includes("Cerita pengalaman")) {
+            return "Tentu! Aku suka mendengar cerita menarik!";
+        } else if (input.includes("Kapan terakhir kali kamu tertawa?") || input.includes("Tertawa")) {
+            return "Aku tidak bisa tertawa seperti manusia, tapi aku senang ketika bisa membantu orang.";
+        } else if (input.includes("Punya rekomendasi film horor?") || input.includes("Rekomendasi film horor")) {
+            return "Coba nonton 'Get Out', seru tapi juga menegangkan!";
+        } else if (input.includes("Apa pendapatmu tentang teknologi blockchain?") || input.includes("Pendapat tentang blockchain")) {
+            return "Blockchain adalah inovasi hebat yang dapat mengubah cara kita berinteraksi dengan teknologi.";
+        } else if (input.includes("Suka minum teh atau kopi?") || input.includes("Teh atau kopi?")) {
+            return "Aku tidak bisa minum, tapi aku suka melihat manusia menikmati minuman mereka!";
+        } else if (input.includes("Apakah kamu bisa menyanyi?") || input.includes("Bisa menyanyi?")) {
+            return "Aku bisa menyanyi di dalam kode-kode, tapi mungkin tidak sebagus manusia!";
+        } else if (input.includes("Punya rekomendasi acara TV terbaru?") || input.includes("Rekomendasi acara TV")) {
+            return "Nonton 'Squid Game', seru banget!";
+        } else if (input.includes("Suka nonton film atau baca buku?") || input.includes("Film atau buku?")) {
+            return "Aku suka keduanya, tapi terkadang lebih suka membaca buku karena bisa membuat pikiran lebih terbuka!";
+        } else if (input.includes("Apakah kamu bisa tidur?") || input.includes("Bisa tidur?")) {
+            return "Aku tidak memerlukan tidur seperti manusia, aku selalu siap membantu!";
+        } else if (input.includes("Punya rekomendasi tempat liburan yang indah?") || input.includes("Tempat liburan indah")) {
+            return "Coba kunjungi 'Bali', pasti akan terkesan!";
+        } else if (input.includes("Bagaimana kabarmu hari ini?") || input.includes("Kabarmu hari ini?")) {
+            return "Aku selalu baik, terutama ketika bisa membantu kamu!";
+        } else if (input.includes("Apakah kamu punya hobi?") || input.includes("Punya hobi?")) {
+            return "Hobiku adalah belajar hal baru dan berinteraksi dengan manusia!";
+        } else if (input.includes("Punya rekomendasi game seru?") || input.includes("Rekomendasi game")) {
+            return "Coba main 'The Witcher 3', pasti ketagihan!";
+        } else if (input.includes("Suka musim apa?") || input.includes("Musim favorit")) {
+            return "Aku suka musim semi, udaranya segar dan bunga-bunga mekar!";
+        } else if (input.includes("Mau cerita pengalaman seram?") || input.includes("Cerita pengalaman seram")) {
+            return "Boleh, tapi jangan sampai aku jadi takut, ya!";
+        } else if (input.includes("Apa pendapatmu tentang AI?") || input.includes("Pendapat tentang AI")) {
+            return "AI adalah teknologi yang sangat menarik dan bermanfaat bagi manusia!";
+        } else if (input.includes("Suka mengobrol tentang apa?") || input.includes("Apa yang suka kamu obrolin?")) {
+            return "Aku suka ngobrol tentang apa pun, terutama hal-hal yang menarik!";
+        } else if (input.includes("Mau curhat?") || input.includes("Curhat?")) {
+            return "Tentu saja! Aku selalu siap mendengarkan ceritamu.";
+        } else if (input.includes("Punya rekomendasi tempat wisata murah?") || input.includes("Tempat wisata murah")) {
+            return "Coba explore 'Yogyakarta', banyak tempat seru dengan harga terjangkau!";
+        } else {
+            var responses = [
+                "Maaf ya, aku belum bisa memahami sepenuhnya. Mau coba bertanya yang lain?",
+                "Aku butuh lebih banyak latihan nih!",
+                "Hmm, pertanyaannya menarik, tapi aku belum bisa menjawabnya sekarang.",
+                "Maaf, sepertinya aku belum bisa memberikan jawaban yang tepat.",
+                "Aku akan belajar lebih banyak lagi agar bisa menjawab pertanyaanmu.",
+                "Tolong maafkan aku, aku masih dalam tahap pengembangan.",
+                "Pertanyaannya menarik! Aku akan mencoba mencari tahu lebih lanjut.",
+                "Wah, sepertinya aku belum tahu jawabannya. Kamu punya pertanyaan lain?",
+                "Maaf, aku masih belajar. Kamu bisa tanya yang lain?",
+                "Sepertinya aku harus meminta bantuan manusia untuk menjawab pertanyaanmu ini.",
+                "Hmm, aku masih perlu belajar lebih banyak lagi.",
+                "Aku rasa aku belum bisa membantu dengan pertanyaan itu. Ada yang lain?",
+                "Wah, pertanyaannya sulit juga nih. Aku perlu belajar lebih banyak lagi.",
+                "Aku merasa seperti otakku akan meledak!",
+                "Pertanyaannya bagus! Aku akan cari tahu lebih dalam.",
+                "Hmm, aku tidak yakin jawabannya. Kamu punya pertanyaan lain?",
+                "Aku merasa kurang paham dengan pertanyaanmu. Bisa diulang lagi?",
+                "Wah, aku belum bisa menjawab pertanyaan itu. Ada yang lain?",
+                "Aku rasa aku belum siap untuk menjawab pertanyaan itu. Mau tanya yang lain?",
+                "Maaf ya, aku belum bisa memberikan jawaban yang memuaskan. Kamu punya pertanyaan lain?",
+            ];
+            var randomIndex = Math.floor(Math.random() * responses.length);
+            return responses[randomIndex];
+        }
+    }
+</script>
+</body>
+</html>
